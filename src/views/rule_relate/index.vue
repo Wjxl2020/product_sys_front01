@@ -1,7 +1,7 @@
 <template>
     <div>
       <el-row :gutter="10">
-        <el-col :span="5"><el-input v-model="search.name" placeholder="请输入要查询的规则名"></el-input></el-col>
+        <el-col :span="5"><el-input v-model="search.result" placeholder="请输入要查询的规则名"></el-input></el-col>
         <el-col :span="19">
           <el-button type="primary" icon="el-icon-search" plain @click="searchData()">搜索</el-button>
           <el-button type="primary" icon="el-icon-circle-plus-outline" plain @click="add()">添加规则</el-button>
@@ -97,10 +97,10 @@
     data() {
       return {
         search: {
-          name: ''
+          result: ''
         },
         query: {
-          name: '',
+          result: '',
           pageNo: 1,
           pageSize: 8
         },
@@ -129,7 +129,7 @@
         },this.query)
       },
       searchData() {
-        this.query.name = this.search.name
+        this.query.result = this.search.result
         this.query.pageNo = 1
         this.getData()
       },

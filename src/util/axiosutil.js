@@ -3,7 +3,7 @@ import store from '@/vuex'
 
 
 
-axios.defaults.baseURL = 'http://127.0.0.1:8081'
+axios.defaults.baseURL = 'http://192.168.43.25:8081'
 if (store.getters.getToken) {
   axios.defaults.headers.common['token'] = store.getters.getToken
 }

@@ -1,67 +1,111 @@
 <template>
-    <div class="login-container">
-        <el-form ref="form"  :model="login" label-width="120px" >
-          <h3 class="login-title">系统登录</h3>
-          <el-form-item label="用户名"  prop="code">
-            <el-input v-model="login.username"></el-input>
-          </el-form-item>
-          <el-form-item label="密码"  prop="name">
-            <el-input v-model="login.password" type="password" show-password auto-complete="off"></el-input>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="primary" plain @click="loginform">登录</el-button>
-          </el-form-item>
-        </el-form>
-    </div>
-  </template>
-  
-  <script>
-    import { mapMutations} from 'vuex'
-  export default {
-    name: 'Login',
-    data() {
-      return {
-        login: {
-          username: '',
-          password: ''
-        }
-      }
+  <div>
+    <el-row :gutter="10">
+      <el-col :span="4"><el-input v-model="search.cause" placeholder="请输入规则条件"></el-input></el-col>
+      <el-col :span="4"><el-input v-model="search.result" placeholder="请输入规则结果"></el-input></el-col>
+      <el-col :span="2">
+        <el-button type="primary" icon="el-icon-search" plain @click="searchData()">双向推理</el-button>
+      </el-col>
+    </el-row>
+    <el-table
+      :data="result.tableData"
+      style="width: 100%"
+       @selection-change="handleSelectionChange"
+    >
+      <el-table-column
+        type="selection"
+      >
+      </el-table-column>
+      <el-table-column
+        label="ID"
+        width="80"
+        prop="id"
+      >
+      </el-table-column>
+      <el-table-column
+        label="结果"
+        prop="result"
+      >
+      </el-table-column>
+      <el-table-column
+        label="条件"
+        prop="cause"
+        width="500"
+      >
+      </el-table-column>   
+    </el-table>
+    <el-pagination
+      style="margin-top:20px;"
+      background
+      layout="prev, pager, next"
+      :page-count="result.pages"
+      :current-page.sync="query.pageNo"
+      :page-size="query.pageSize"
+      @current-change="getData()">
+    </el-pagination>
+    <el-dialog
+      :title="title"
+      :visible.sync="show"
+      :close-on-click-modal = "false"
+      width="500px"
+    >
+      <UserEdit
+        v-if="show"
+        :show.sync="show"
+        @getData="getData()"
+        :editid="editid"
+      ></UserEdit>
+    </el-dialog>
+  </div>
+</template>
+
+<script>
+// import UserEdit from '@/views/user/edit'
+export default {
+  name: 'Rule',
+  data() {
+    return {
+      search: {
+        result: '',
+        cause: ''
+      },
+      query: {
+        rule: '',
+        pageNo: 1,
+        pageSize: 8
+      },
+      result:{
+        tableData: [],
+        pages: 0
+      },
+      show: false,
+      editid: null,
+      selectedrow: [],
+      title: ''
+    }
+  },
+  components:{
+    // UserEdit
+  },
+  created() {
+    // this.getData()
+  },
+  methods: {
+    getData() {
+      this.axios.get('/ums-rule-relate/bidirection',response => {
+        this.result.tableData = response.obj
+        this.result.pages = response.obj.pages
+        console.log(response)
+      },this.query)
     },
-    created() {
-    },
-    methods: {
-      ...mapMutations(['setToken']),
-      loginform() {
-        this.axios.post('/ums-user/token',response => {
-          console.log(response)
-          // 登录成功后 转到一个成功页面
-          if(response.code == 200) {
-            this.axios.setToken(response.obj)
-            this.setToken(response.obj)
-            this.$router.push({
-              path: '/'
-            })
-          }
-        },this.login)
-      }
+    searchData() {
+      this.query.result = this.search.result
+      this.query.cause = this.search.cause
+      this.query.pageNo = 1
+      this.getData()
     }
   }
-  </script>
-  <style scoped >
-    .login-container{
-      border-radius: 10px;
-        margin: 180px auto;
-        background-clip: padding-box;
-        width: 500px;
-        border: 1px solid #A9A9A9;
-        padding: 35px 35px 15px 35px;
-        box-shadow: 0 0 25px #8fbcd0 ;
-    }
-  
-    .login-title{
-      margin:  0 auto 20px 100px;
-    }
-  
-  
-  </style>
-  
+}
+</script>
+<style scoped>
+</style>

@@ -12,7 +12,7 @@
         <el-input v-model="form.realname" ></el-input>
       </el-form-item>
 
-      <el-form-item label="电话号">
+      <el-form-item label="邮箱">
         <el-input v-model="form.telephone" ></el-input>
       </el-form-item>
 

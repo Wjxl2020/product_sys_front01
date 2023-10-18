@@ -1,8 +1,8 @@
 <template>
     <div>
-      <el-row :gutter="10">
+      <el-row :gutter="25">
         <el-col :span="5"><el-input v-model="search.rule" placeholder="请输入规则名"></el-input></el-col>
-        <el-col :span="19">
+        <el-col :span="15">
           <el-button type="primary" icon="el-icon-search" plain @click="searchData()">正向推理</el-button>
         </el-col>
       </el-row>

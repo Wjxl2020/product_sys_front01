@@ -1,9 +1,9 @@
 <template>
     <div>
       <el-row :gutter="10">
-        <el-col :span="5"><el-input v-model="search.result" placeholder="请输入规则结果"></el-input></el-col>
-        <el-col :span="6"><el-input v-model="search.cause" placeholder="请输入规则条件"></el-input></el-col>
-        <el-col :span="18">
+        <el-col :span="4"><el-input v-model="search.result" placeholder="请输入规则结果"></el-input></el-col>
+        <el-col :span="4"><el-input v-model="search.cause" placeholder="请输入规则条件"></el-input></el-col>
+        <el-col :span="2">
           <el-button type="primary" icon="el-icon-search" plain @click="searchData()">逆向推理</el-button>
         </el-col>
       </el-row>
