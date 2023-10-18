@@ -1,8 +1,9 @@
 <template>
     <div>
       <el-row :gutter="10">
-        <el-col :span="5"><el-input v-model="search.rule" placeholder="请输入规则"></el-input></el-col>
-        <el-col :span="19">
+        <el-col :span="5"><el-input v-model="search.result" placeholder="请输入规则结果"></el-input></el-col>
+        <el-col :span="6"><el-input v-model="search.cause" placeholder="请输入规则条件"></el-input></el-col>
+        <el-col :span="18">
           <el-button type="primary" icon="el-icon-search" plain @click="searchData()">逆向推理</el-button>
         </el-col>
       </el-row>
@@ -65,7 +66,8 @@
     data() {
       return {
         search: {
-          rule: ''
+          result: '',
+          cause: ''
         },
         query: {
           rule: '',
@@ -97,7 +99,8 @@
         },this.query)
       },
       searchData() {
-        this.query.rule = this.search.rule
+        this.query.result = this.search.result
+        this.query.cause = this.search.cause
         this.query.pageNo = 1
         this.getData()
       }
